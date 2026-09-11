@@ -115,6 +115,52 @@ class HashMap {
       }
     }
   }
+  
+    clear() {
+    this.buckets = new Array(this.capacity);
+  }
+
+  keys() {
+    const keysArray = [];
+
+    for (const bucket of this.buckets) {
+      if (bucket) {
+        for (const [key] of bucket) {
+          keysArray.push(key);
+        }
+      }
+    }
+
+    return keysArray;
+  }
+
+  values() {
+    const valuesArray = [];
+
+    for (const bucket of this.buckets) {
+      if (bucket) {
+        for (const [, value] of bucket) {
+          valuesArray.push(value);
+        }
+      }
+    }
+
+    return valuesArray;
+  }
+
+  entries() {
+    const entriesArray = [];
+
+    for (const bucket of this.buckets) {
+      if (bucket) {
+        for (const entry of bucket) {
+          entriesArray.push(entry);
+        }
+      }
+    }
+
+    return entriesArray;
+  }
 }
 
 export default HashMap;

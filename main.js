@@ -6,14 +6,10 @@ test.set("apple", "red");
 test.set("banana", "yellow");
 test.set("carrot", "orange");
 
-console.log(test.get("apple"));   // "red"
-console.log(test.get("mango"));   // null
+console.log(test.keys());    // ["apple", "banana", "carrot"] (order may vary)
+console.log(test.values());  // ["red", "yellow", "orange"] (order may vary)
+console.log(test.entries()); // [["apple","red"], ["banana","yellow"], ["carrot","orange"]]
 
-console.log(test.has("banana"));  // true
-console.log(test.has("mango"));   // false
-
-console.log(test.remove("banana")); // true
-console.log(test.has("banana"));    // false
-console.log(test.remove("mango"));  // false
-
-console.log(test.length()); // 2
+test.clear();
+console.log(test.length());  // 0
+console.log(test.keys());    // []
