@@ -15,6 +15,60 @@ class HashMap {
 
     return hashCode;
   }
+
+  set(key, value) {
+    const index = this.hash(key);
+
+    if (index < 0 || index >= this.buckets.length) {
+      throw new Error("Trying to access index out of bounds");
+    }
+
+    if (!this.buckets[index]) {
+      this.buckets[index] = [];
+    }
+
+    const bucket = this.buckets[index];
+
+    // Check if key already exists in this bucket -> update it
+    for (const entry of bucket) {
+      if (entry[0] === key) {
+        entry[1] = value;
+        return;
+      }
+    }
+
+    // Otherwise, add a new entry
+    bucket.push([key, value]);
+
+    // Check if we need to grow
+    if (this.length() > this.capacity * this.loadFactor) {
+      this.grow();
+    }
+  }
+
+  length() {
+    let count = 0;
+    for (const bucket of this.buckets) {
+      if (bucket) {
+        count += bucket.length;
+      }
+    }
+    return count;
+  }
+
+  grow() {
+    const oldBuckets = this.buckets;
+    this.capacity *= 2;
+    this.buckets = new Array(this.capacity);
+
+    for (const bucket of oldBuckets) {
+      if (bucket) {
+        for (const [key, value] of bucket) {
+          this.set(key, value); // re-hash and re-insert using new capacity
+        }
+      }
+    }
+  }
 }
 
 export default HashMap;
